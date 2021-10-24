@@ -1,3 +1,5 @@
+'use strict';
+
 const priceToGetDiscount = 15000;
 const discountValue = 5;
 const discountValueToCalculate = 1 - discountValue / 100;
