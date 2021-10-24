@@ -11,28 +11,26 @@ function showCategories() {
     console.log("Categories #" + (i + 1) + ": " + categories[i].name);
   }
 }
-showCategories();
 
-function getCategoryProducts() {
+function getCategory() {
   let categoryNumber;
   do {
     categoryNumber = parseInt(prompt("Please enter the category number (from 1 to " + categories.length + "):"));
   } while (!(categoryNumber > 0 && categoryNumber <= categories.length));
 
-  return categories[categoryNumber - 1].products;
+  return categories[categoryNumber - 1];
 }
 
-const productsCategory = getCategoryProducts();
 
-function showProducts() {
+function showProducts(productsCategory) {
   console.log("List of products:");
   for (let i = 0; i < productsCategory.length; i++) {
     console.log("Product #" + (i + 1) + ": " + productsCategory[i].name);
   }
 }
-showProducts();
 
-function getProductNumber() {
+
+function getProductNumber(productsCategory) {
   let productNumber;
   do {
     productNumber = parseInt(prompt("Please enter the product number (from 1 to " + productsCategory.length + "):"));
@@ -41,9 +39,8 @@ function getProductNumber() {
   return productsCategory[productNumber - 1];
 }
 
-const selectedProduct = getProductNumber();
 
-function getProductAmount() {
+function getProductAmount(selectedProduct) {
   let productAmount;
   do {
     productAmount = parseInt(prompt("Please enter the product amount (from 1 to " + selectedProduct.count + "):"));
@@ -52,7 +49,6 @@ function getProductAmount() {
   return productAmount;
 }
 
-const productAmount = getProductAmount();
 
 function priceCalculation(amount, price) {
   const priceObj = {
@@ -65,13 +61,15 @@ function priceCalculation(amount, price) {
   return priceObj;
 }
 
-function showPrice(obj) {
-  document.write("<p>The price of your order is: $" + obj.totalPrice + "</p>");
-  if (obj.priceWithDiscount) {
-    document.write("<p>You will get the discount " + discountValue + "%</p>");
-    document.write("<p>The final price is: $" + obj.priceWithDiscount + "</p>");
-  }
-}
 
-const priceObj = priceCalculation(productAmount, selectedProduct.price);
-showPrice(priceObj);
+do {
+  showCategories();
+  const category = getCategory();
+  const productsCategory = category.products;
+  showProducts(productsCategory);
+  const selectedProduct = getProductNumber(productsCategory);
+  const productAmount = getProductAmount(selectedProduct);
+  const priceObj = priceCalculation(productAmount, selectedProduct.price);
+  const order = new Order(category, selectedProduct, productAmount, priceObj);
+  order.showOrder();
+} while (confirm('Do you want to repeat the order?'));

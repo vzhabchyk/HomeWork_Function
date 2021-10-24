@@ -11,12 +11,6 @@ const notebooks = new Category("Notebooks", notebooksCategoryProduct);
 
 const samsungBuds = new Product("Samsung Buds", 10, 300);
 const accessoriesCategoryProducts = [samsungBuds];
-const accessories = new Category("Accessories");
-
-
-
-
-
-
+const accessories = new Category("Accessories", accessoriesCategoryProducts);
 
 const categories = [phones, notebooks, accessories];
